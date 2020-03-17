@@ -1,6 +1,17 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 class TransactionsList extends Component {
+
+    handleClick = (transaction) => {
+        this.props.history.push({
+            pathname: `/transactions/${transaction.account}`,
+            state: {
+                transaction: transaction
+            }
+        })
+    }
+
     render() {
         return (
             <table className="transactions-table">
@@ -14,9 +25,11 @@ class TransactionsList extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.props.transactions.map((transaction, index) => (
-                        <tr key={index}>
-                            <td>{transaction.account}</td>
+                    {this.props.transactions.map((transaction) => (
+                        <tr key={transaction.account}>
+                            <td>
+                                <a href="#" onClick={() => this.handleClick(transaction)}>{transaction.account}</a>
+                            </td>
                             <td>{transaction.accountName}</td>
                             <td>{transaction.currencyCode}</td>
                             <td>{transaction.amount}</td>
@@ -29,4 +42,4 @@ class TransactionsList extends Component {
     }
 }
 
-export default TransactionsList;
+export default withRouter(TransactionsList);

@@ -1,0 +1,15 @@
+.transaction-info h2 {
+    font-size: 18px;
+}
+
+.transaction {
+   padding: 16px; 
+}  
+
+.info {
+    margin: 8px 0;
+}
+
+.info span {
+    font-weight: 300;
+}
