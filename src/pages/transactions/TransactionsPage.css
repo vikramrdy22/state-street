@@ -1,0 +1,13 @@
+.header {
+    height: 64px;
+    background: #E91E63;
+}
+
+.title {
+    font-size: 20px;
+    margin: 0;
+}
+
+.mb-16 {
+    margin-bottom: 16px;
+}
