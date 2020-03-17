@@ -13,3 +13,7 @@
 .info span {
     font-weight: 300;
 }
+
+.info label {
+    margin-right: 8px;
+}

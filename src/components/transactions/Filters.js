@@ -15,7 +15,6 @@ class Filters extends Component {
     }
 
     handleChange = (type, name, event) => {
-        const { checked } = event.target;
         const selectedFilters = { ...this.state.selectedFilters };
         if (type === "accountName") {
             const index = selectedFilters.accountNames.indexOf(name);
@@ -38,7 +37,7 @@ class Filters extends Component {
     }
 
     render() {
-        const { accountNames, transactionTypes, selectedFilters } = this.state;
+        const { selectedFilters } = this.state;
         return (
             <div className="filters">
                 <h2>Filters</h2>
