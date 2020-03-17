@@ -1,0 +1,10 @@
+.account-name-filters, .transaction-type-filters {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.filters {
+    width: 250px;
+    padding: 16px;
+}

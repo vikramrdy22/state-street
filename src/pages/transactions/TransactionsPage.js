@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { getTransactions } from "../../services/TransactionService";
 import TransactionsList from "./../../components/transactions/TransactionsList";
+import Filters from "./../../components/transactions/Filters";
 import "./TransactionsPage.css";
 
 class TransactionsPage extends Component {
 
     hasMoreResult = false;
     filteredTransactionsList = [];
+    allTransactions = [];
     from = 0
     size = 50;
 
@@ -20,7 +22,7 @@ class TransactionsPage extends Component {
         window.onscroll = () => {
             if (this.hasMoreResult) {
                 let st = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
-                if(document.documentElement.offsetHeight - (window.innerHeight + st) < 150) {
+                if (document.documentElement.offsetHeight - (window.innerHeight + st) < 150) {
                     this.from = this.from + this.size;
                     this.showMoreTransactions();
                 }
@@ -43,8 +45,29 @@ class TransactionsPage extends Component {
 
     async componentDidMount() {
         const data = await getTransactions();
+        this.allTransactions = [...data.transactions];
         this.filteredTransactionsList = data.transactions;
         this.showMoreTransactions();
+    }
+
+    handleFilterChange = (selectedFilters) => {
+        const data = [...this.allTransactions];
+        const accountNames = selectedFilters.accountNames.map(ele => ele.replace(/_/g, " ").toLowerCase());
+        const transactionTypes = selectedFilters.transactionTypes.map(ele => ele.toLowerCase());
+
+        let fitleredResults = data;
+        if (accountNames.length > 0) {
+            fitleredResults = data.filter(x => accountNames.indexOf(x.accountName.toLowerCase()) > -1);
+        }
+        if (transactionTypes.length > 0) {
+            fitleredResults = fitleredResults.filter(x => transactionTypes.indexOf(x.transactionType.toLowerCase()) > -1);
+        }
+        this.filteredTransactionsList = fitleredResults;
+        this.from = 0;
+        this.setState({
+            displayedTransactionsList: []
+        }, () => this.showMoreTransactions());
+
     }
 
     render() {
@@ -55,10 +78,9 @@ class TransactionsPage extends Component {
                     <h1 className="title">My Transactions</h1>
                     <hr />
                 </div>
-                <div>
-                    <div>
-                        <TransactionsList transactions={displayedTransactionsList} />
-                    </div>
+                <div className="transactions-main">
+                    <Filters onFilterChange={this.handleFilterChange} />
+                    <TransactionsList transactions={displayedTransactionsList} />
                 </div>
             </div>
         )

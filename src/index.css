@@ -16,3 +16,17 @@ code {
   max-width: 1024px;
   margin: 20px auto;
 }
+
+.transactions-table {
+  width: 100%;
+}
+
+.transactions-table th {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 0;
+}
+.transactions-table td  {
+  padding: 4px;
+}
